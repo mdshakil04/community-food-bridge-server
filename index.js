@@ -38,7 +38,7 @@ async function run() {
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
       const options = {
-        projection:{_id:1, food_image:1, food_name:1,donator_image:1, donator_name:1, food_quantity:1, pickup_location:1, expired_date:1}
+        projection:{_id:1, food_image:1, food_name:1,donator_image:1, donator_name:1, food_quantity:1, pickup_location:1, expired_date:1, additional_notes:1}
       }
 
       const result = await foodsCollection.findOne(query, options);
