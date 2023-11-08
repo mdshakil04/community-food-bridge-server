@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken')
 require('dotenv').config();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express();
@@ -27,6 +28,11 @@ async function run() {
     await client.connect();
 
     const foodCollection = client.db('foodDb').collection('food');
+
+    app.post('/jwt', async(req, res) =>{
+      const user = req.body;
+      console.log("User for token", user)
+    })
 
     app.post('/food', async(req, res)=>{
       const newFood = req.body;
