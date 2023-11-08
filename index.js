@@ -25,6 +25,12 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+    
+    app.post('/food', async(req, res)=>{
+      const newFood = req.body;
+      console.log(newFood);
+    })
+
     // Data Collect from Database
     const foodsCollection = client.db('allFoods').collection('foods');
     app.get('/foods', async(req, res) =>{
