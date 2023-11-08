@@ -7,7 +7,11 @@ const app = express();
 const port = process.env.port||5000;
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173'
+  ]
+}));
 app.use(express.json());
 
 
@@ -29,11 +33,12 @@ async function run() {
 
     const foodCollection = client.db('foodDb').collection('food');
 
-    app.post('/jwt', async(req, res) =>{
-      const user = req.body;
-      console.log("User for token", user)
-      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'})
-    })
+    // app.post('/jwt', async(req, res) =>{
+    //   const user = req.body;
+    //   console.log("User for token", user)
+    //   const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1h'})
+    //   res.send({token})
+    // })
 
     app.post('/food', async(req, res)=>{
       const newFood = req.body;
