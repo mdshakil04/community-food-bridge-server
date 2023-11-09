@@ -1,16 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-const jwt = require('jsonwebtoken')
+// const jwt = require('jsonwebtoken')
 require('dotenv').config();
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+// , ObjectId
+const { MongoClient, ServerApiVersion,ObjectId } = require('mongodb');
 const app = express();
 const port = process.env.port||5000;
 
 // Middlewares
 app.use(cors({
-  origin: [
-    'http://localhost:5173'
-  ]
+  origin: ['https://community-food-bridge.web.app', 'http://localhost:5174']
 }));
 app.use(express.json());
 
@@ -40,6 +39,12 @@ async function run() {
     //   res.send({token})
     // })
 
+    app.get('/food', async(req, res) => {
+      const cursor = foodCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
+
     app.post('/food', async(req, res)=>{
       const newFood = req.body;
       console.log(newFood);
@@ -47,11 +52,7 @@ async function run() {
       res.send(result)
     })
 
-    app.get('/food', async(req, res) => {
-      const cursor = foodCollection.find();
-      const result = await cursor.toArray();
-      res.send(result);
-    })
+    
 
     // Data Collect from Database
     const foodsCollection = client.db('allFoods').collection('foods');
@@ -87,7 +88,7 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('Server is rinning')
+    res.send('Community Food Bridge Server is running')
 })
 
 app.listen(port, () =>{
